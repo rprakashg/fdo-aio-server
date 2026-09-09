@@ -1,0 +1,31 @@
+# Modifying this file in-place is not recommended because changes will
+# be overwritten during image/package upgrades. Customize via a systemd
+# "drop-in" instead, e.g. `systemctl edit fdo-owner.service`:
+#
+#	[Service]
+#	Environment=PORT=8043
+#	ExecStart=
+#	ExecStart=/usr/bin/go-fdo-server owner 0.0.0.0:${PORT} --log-level debug ...
+
+[Unit]
+Description=FDO Owner Server
+Documentation=https://github.com/fido-device-onboard/go-fdo-server
+After=network.target
+
+[Service]
+Type=simple
+PrivateDevices=yes
+StateDirectory=go-fdo-owner
+CacheDirectory=go-fdo-owner
+Environment=PORT=8043
+# The device CA cert must be the same file used by fdo-manufacturing.service.
+ExecStart=/usr/bin/go-fdo-server owner 0.0.0.0:${PORT} \
+  --db-type sqlite \
+  --db-dsn file:/etc/fdo/db/owner.db \
+  --device-ca-cert /etc/fdo/pki/device_ca_cert.pem \
+  --owner-key /etc/fdo/pki/owner_key.der
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,28 @@
+# Modifying this file in-place is not recommended because changes will
+# be overwritten during image/package upgrades. Customize via a systemd
+# "drop-in" instead, e.g. `systemctl edit fdo-rendezvous.service`:
+#
+#	[Service]
+#	Environment=PORT=8041
+#	ExecStart=
+#	ExecStart=/usr/bin/go-fdo-server rendezvous 0.0.0.0:${PORT} --log-level debug ...
+
+[Unit]
+Description=FDO Rendezvous Server
+Documentation=https://github.com/fido-device-onboard/go-fdo-server
+After=network.target
+
+[Service]
+Type=simple
+PrivateDevices=yes
+StateDirectory=go-fdo-rendezvous
+CacheDirectory=go-fdo-rendezvous
+Environment=PORT=8041
+ExecStart=/usr/bin/go-fdo-server rendezvous 0.0.0.0:${PORT} \
+  --db-type sqlite \
+  --db-dsn file:/etc/fdo/db/rv.db
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
