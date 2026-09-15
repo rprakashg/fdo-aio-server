@@ -1,17 +1,7 @@
 REGISTRY ?= quay.io/rprakashg
 TAG ?= latest
 IMAGE_NAME ?= fdo-aio-server
-
-UNAME_M := $(shell uname -m)
-ifeq ($(UNAME_M),x86_64)
-  ARCH ?= amd64
-else ifeq ($(UNAME_M),aarch64)
-  ARCH ?= arm64
-else ifeq ($(UNAME_M),arm64)
-  ARCH ?= arm64
-else
-  ARCH ?= $(UNAME_M)
-endif
+ARCH ?= amd64
 
 .PHONY: build
 build:
@@ -34,3 +24,24 @@ cloud-init:
 		-f images/cloud-init/Containerfile images/cloud-init
 	
 	podman push ${REGISTRY}/${IMAGE_NAME}:aws
+
+ami:
+	echo "Buildingi AMI"
+	sudo podman pull quay.io/rprakashg/fdo-aio-server:aws
+
+	sudo podman run \
+		--rm \
+		-it \
+		--privileged \
+		-v $HOME/.aws:/root/.aws:ro \
+		-v ./ami/config.toml:/config.toml:ro \
+		-v ./ami/output:/output \
+		-v /var/lib/containers/storage:/var/lib/containers/storage \
+		--env AWS_PROFILE=default \
+		registry.redhat.io/rhel9/bootc-image-builder:latest \
+		--type ami \
+		--config /config.toml \
+		--aws-bucket bootc-amis-demo \
+		--aws-region ap-south-1 \
+		--aws-ami-name fdo-aio-server \
+		quay.io/rprakashg/fdo-aio-server:aws
