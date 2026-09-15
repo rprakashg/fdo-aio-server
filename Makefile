@@ -15,6 +15,7 @@ build:
 
 	podman push ${REGISTRY}/${IMAGE_NAME}:${TAG}
 
+.PHONY: cloud-init
 cloud-init:
 	echo "Overlaying cloud-init packages"
 	podman build \
@@ -25,6 +26,7 @@ cloud-init:
 	
 	podman push ${REGISTRY}/${IMAGE_NAME}:aws
 
+.PHONY: ami
 ami:
 	echo "Buildingi AMI"
 	sudo podman pull quay.io/rprakashg/fdo-aio-server:aws
