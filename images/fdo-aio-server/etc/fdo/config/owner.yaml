@@ -29,9 +29,9 @@ owner:
     fsims:
       - fsim: "fdo.command"
         params:
-          cmd: "/bin/echo"
-          args: ["hello", "device"]
-          may_fail: false
+          cmd: "systemctl"
+          args: ["enable", "--now", "flightctl-agent.service"]
+          may_fail: true
           return_stdout: true
           return_stderr: false
       - fsim: "fdo.download"
