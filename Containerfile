@@ -16,7 +16,7 @@ COPY etc /etc
 COPY --from=builder /opt/app-root/src/go-fdo-server/go-fdo-server /usr/bin/go-fdo-server
 
 # Setup the directory structure
-RUN mkdir -p /etc/fdo/db/ /etc/fdo/pki /etc/fdo/files
+RUN mkdir -p /etc/fdo/db/ /etc/fdo/pki /etc/fdo/files /etc/fdo/uploads /etc/fdo/downloads
 
 # Generate Test Certificates
 # Filenames match what the fdo-manufacturing/fdo-owner/fdo-rendezvous systemd

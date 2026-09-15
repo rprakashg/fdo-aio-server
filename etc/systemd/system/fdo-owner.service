@@ -19,11 +19,7 @@ StateDirectory=go-fdo-owner
 CacheDirectory=go-fdo-owner
 Environment=PORT=8043
 # The device CA cert must be the same file used by fdo-manufacturing.service.
-ExecStart=/usr/bin/go-fdo-server owner 0.0.0.0:${PORT} \
-  --db-type sqlite \
-  --db-dsn file:/etc/fdo/db/owner.db \
-  --device-ca-cert /etc/fdo/pki/device_ca_cert.pem \
-  --owner-key /etc/fdo/pki/owner_key.der
+ExecStart=/usr/bin/go-fdo-server owner --config /etc/fdo/config/owner.yaml
 Restart=on-failure
 RestartSec=5
 

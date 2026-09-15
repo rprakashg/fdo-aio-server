@@ -18,9 +18,7 @@ PrivateDevices=yes
 StateDirectory=go-fdo-rendezvous
 CacheDirectory=go-fdo-rendezvous
 Environment=PORT=8041
-ExecStart=/usr/bin/go-fdo-server rendezvous 0.0.0.0:${PORT} \
-  --db-type sqlite \
-  --db-dsn file:/etc/fdo/db/rv.db
+ExecStart=/usr/bin/go-fdo-server rendezvous --config /etc/fdo/config/rendezvous.yaml
 Restart=on-failure
 RestartSec=5
 

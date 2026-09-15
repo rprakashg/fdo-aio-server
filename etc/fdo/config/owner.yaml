@@ -1,0 +1,48 @@
+# FDO Owner Server Configuration
+log:
+  level: "info"
+
+db:
+  type: "sqlite"
+  dsn: "file:/etc/fdo/db/owner.db"
+
+http:
+  ip: "0.0.0.0"
+  port: "8043"
+  # cert: /etc/pki/go-fdo-server/owner-https-example.crt
+  # key: /etc/pki/go-fdo-server/owner-https-example.key
+
+device_ca:
+  cert: "/etc/fdo/pki/device_ca_cert.pem"
+
+owner:
+  cert: "/etc/fdo/pki/owner_cert.pem"
+  key: "/etc/fdo/pki/owner_key.der"
+  reuse_credentials: false
+  to0_insecure_tls: false
+  service_info:
+    defaults:
+      - fsim: "fdo.download"
+        dir: "/etc/fdo/downloads"
+      - fsim: "fdo.upload"
+        dir: "/etc/fdo/uploads"
+    fsims:
+      - fsim: "fdo.command"
+        params:
+          cmd: "/bin/echo"
+          args: ["hello", "device"]
+          may_fail: false
+          return_stdout: true
+          return_stderr: false
+      - fsim: "fdo.download"
+        params:
+          files:
+            - src: "config.yaml"
+              dst: "/etc/flightctl/config.yaml"
+              may_fail: false
+      - fsim: "fdo.upload"
+        params:
+          files:
+            - src: "/var/log/device.log"
+              dst: "device.log"
+              may_fail: true

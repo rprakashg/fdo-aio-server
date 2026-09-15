@@ -1,0 +1,22 @@
+# FDO Manufacturing server default configuration
+log:
+  level: "info"
+db:
+  type: "sqlite"
+  dsn: "file:/etc/fdo/db/mfg.db"
+http:
+  ip: "0.0.0.0"
+  port: "8038"
+  # To enable HTTPS provide the server certificate and matching
+  # private key below. If the certificate is signed by a certificate
+  # authority, the certFile should be the concatenation of the
+  # server's certificate, any intermediates, and the CA's certificate.
+  ##cert: /etc/pki/go-fdo-server/manufacturer-https-example.crt
+  ##key: /etc/pki/go-fdo-server/manufacturer-https-example.key
+manufacturing:
+  key: "/etc/fdo/pki/manufacturer_key.der"
+device_ca:
+  cert: "/etc/fdo/pki/device_ca_cert.pem"
+  key: "/etc/fdo/pki/device_ca_key.der"
+owner:
+  cert: "/etc/fdo/pki/owner_cert.pem"
