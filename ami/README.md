@@ -24,6 +24,6 @@ podman run \
     --config /config.toml \
     --aws-bucket bootc-amis-demo \
     --aws-region ap-south-1 \
-    --aws-ami-name ignition-bootc \
+    --aws-ami-name fdo-aio-server \
     quay.io/rprakashg/fdo-aio-server@${IMAGE_DIGEST}
 ```
