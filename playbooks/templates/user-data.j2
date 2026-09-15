@@ -1,0 +1,19 @@
+#cloud-config
+users:
+- name: "{{ admin_user }}"
+  ssh_authorized_keys:
+  - "{{ admin_user_ssh_pubkey }}"
+  groups: ["wheel"]
+  passwd: "{{ admin_user_password | password_hash('sha512') }}"
+  shell: /bin/bash
+  sudo: ['ALL=(ALL) NOPASSWD:ALL']
+          
+runcmd:
+- echo "FDO All In One Server" > /etc/motd
+
+write_files:
+- path: /etc/fdo/downloads/config.yaml
+  permissions: '0755'
+  owner: root:root
+  content: |
+    {{ lookup('file', 'config.yaml') | from_yaml | to_nice_yaml | indent(4) }}

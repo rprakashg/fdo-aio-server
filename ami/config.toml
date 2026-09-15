@@ -1,0 +1,5 @@
+[[customizations.user]]
+name = "admin"
+password = "$6$Xe/pf2T/Sv54w3Si$pq53lIHZV2.gNMiYOkldsU/k65pwQ.4IE/k4RsoInkljk7a4BRv.IkV1ytSD4Obku4bRo0l6KNhqY8U4BiH9e"        # generate with: openssl passwd -6
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIONTYMXPSkxWHtfI2vZiTrqpQYwlxMbpT96tm9ewDAM6 admin@somecompany.com"
+groups = ["wheel"]
