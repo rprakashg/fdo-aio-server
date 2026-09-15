@@ -1,0 +1,20 @@
+---
+# Launches an EC2 instance
+- name: Configure FDO
+  hosts: localhost
+  gather_facts: yes
+
+  tasks:
+  - name: Tell Manufacturing server where Rendezvous Server lives
+    ansible.builtin.shell: |
+      curl -X PUT 'http://{{ fdo_aio_server_dns }}:8038/api/v2/rvinfo' \
+        -H 'Content-Type: application/json' \
+        -d '[[{"dns":"{{ fdo_aio_server_dns }}"},{"device_port":8041},{"owner_port":8041},{"protocol":"http"},{"ip":"{{ fdo_aio_server_ip }}"}]]'
+  
+  - name: Tell owner where it lives
+    ansible.builtin.shell: |
+      curl -X PUT 'http://{{ fdo_aio_server_dns }}:8043/api/v2/rvto2addr' \
+        -H 'Content-Type: application/json' \
+        -d '[{"dns":"{{ fdo_aio_server_dns }}","port":8043,"protocol":"http","ip":"{{ fdo_aio_server_ip }}"}]'
+
+...
