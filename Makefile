@@ -35,7 +35,7 @@ ami:
 		--rm \
 		-it \
 		--privileged \
-		-v $HOME/.aws:/root/.aws:ro \
+		-v ${HOME}/.aws:/root/.aws:ro \
 		-v ./ami/config.toml:/config.toml:ro \
 		-v ./ami/output:/output \
 		-v /var/lib/containers/storage:/var/lib/containers/storage \
