@@ -24,9 +24,13 @@ owner:
     defaults:
       - fsim: "fdo.download"
         dir: "/etc/fdo/downloads"
-      - fsim: "fdo.upload"
-        dir: "/etc/fdo/uploads"
     fsims:
+      - fsim: "fdo.download"
+        params:
+          files:
+            - src: "config.yaml"
+              dst: "/etc/flightctl/config.yaml"
+              may_fail: false    
       - fsim: "fdo.command"
         params:
           cmd: "systemctl"
@@ -34,15 +38,3 @@ owner:
           may_fail: true
           return_stdout: true
           return_stderr: false
-      - fsim: "fdo.download"
-        params:
-          files:
-            - src: "config.yaml"
-              dst: "/etc/flightctl/config.yaml"
-              may_fail: false
-      - fsim: "fdo.upload"
-        params:
-          files:
-            - src: "/var/log/device.log"
-              dst: "device.log"
-              may_fail: true
