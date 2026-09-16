@@ -35,20 +35,20 @@ owner:
         params:
           cmd: "chown"
           args: ["root:root", "/etc/flightctl/config.yaml"]
-          may_fail: true
-          return_stdout: true
-          return_stderr: false
+        may_fail: true
+        return_stdout: true
+        return_stderr: true
       - fsim: "fdo.command"
         params:
           cmd: "chmod"
           args: ["0755", "/etc/flightctl/config.yaml"]
-          may_fail: true
-          return_stdout: true
-          return_stderr: false            
+        may_fail: true
+        return_stdout: true
+        return_stderr: true            
       - fsim: "fdo.command"
         params:
           cmd: "systemctl"
           args: ["enable", "--now", "flightctl-agent.service"]
-          may_fail: true
-          return_stdout: true
-          return_stderr: false
+        may_fail: true
+        return_stdout: true
+        return_stderr: true
