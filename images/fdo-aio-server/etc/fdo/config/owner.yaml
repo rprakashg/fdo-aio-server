@@ -31,3 +31,10 @@ owner:
             - src: "config.yaml"
               dst: "/etc/flightctl/config.yaml"
               may_fail: true 
+      - fsim: "fdo.command"
+        params:
+          cmd: "chmod"
+          args: ["0755", "/etc/flightctl"]
+          may_fail: true
+          return_stdout: true
+          return_stderr: true
